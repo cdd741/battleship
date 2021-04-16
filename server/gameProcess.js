@@ -21,39 +21,47 @@ class gameProcess {
 
   gameStart() {
     // for developing purpose
-    let rotation = false;
-    this.player1.addShip(1, 1, 2, rotation);
-    this.player1.addShip(2, 2, 2, rotation);
-    this.player1.addShip(3, 3, 2, rotation);
-    this.player1.addShip(4, 4, 2, rotation);
-    this.player1.addShip(5, 5, 2, rotation);
+    // this.player1.addShip(1, 1, 2, rotation);
+    // this.player1.addShip(2, 2, 2, rotation);
+    // this.player1.addShip(3, 3, 2, rotation);
+    // this.player1.addShip(4, 4, 2, rotation);
+    // this.player1.addShip(5, 5, 2, rotation);
 
-    this.player2.addShip(1, 1, 2, rotation);
-    this.player2.addShip(2, 2, 2, rotation);
-    this.player2.addShip(3, 3, 2, rotation);
-    this.player2.addShip(4, 4, 2, rotation);
-    this.player2.addShip(5, 5, 2, rotation);
-    // while (this.player1.getshipNum() < 5) {
-    //   let type = readlines("p1 type");
-    //   let pos_x = readlines("p1 x");
-    //   let pos_y = readlines("p1 y");
-    //   this.player1.addShip(type, pos_x, pos_y, rotation);
+    // this.player2.addShip(1, 1, 2, rotation);
+    // this.player2.addShip(2, 2, 2, rotation);
+    // this.player2.addShip(3, 3, 2, rotation);
+    // this.player2.addShip(4, 4, 2, rotation);
+    // this.player2.addShip(5, 5, 2, rotation);
+    // let rotation = false;
 
-    //   console.log("play1 grid");
-    //   print(this.player1);
-    // }
+    while (this.player1.getshipNum() < 5) {
+      gameSocket.on("place ship", ship);
+      let type = ship.type;
+      let pos_x = ship.x;
+      let pos_y = ship.y;
+      let rotation = ship.rotation;
+      this.player1.addShip(type, pos_x, pos_y, rotation);
 
-    // while (this.player2.getshipNum() < 5) {
-    //   let type = readlines("p2 type");
-    //   let pos_x = readlines("p2 x");
-    //   let pos_y = readlines("p2 y");
-    //   this.player2.addShip(type, pos_x, pos_y, rotation);
+      console.log("play1 grid");
+      print(this.player1);
+    }
 
-    //   console.log("play2 grid");
-    //   print(this.player2);
-    // }
+    while (this.player2.getshipNum() < 5) {
+      gameSocket.on("place ship", ship);
+      let type = ship.type;
+      let pos_x = ship.x;
+      let pos_y = ship.y;
+      let rotation = ship.rotation;
+      this.player2.addShip(type, pos_x, pos_y, rotation);
+
+      console.log("play2 grid");
+      print(this.player2);
+    }
+
+    gameSocket.emit("start game", "start game");
 
     while (this.isGameEnds() === false) {
+      gameSocket.emit("start game", "start game");
       let pos_x = readlines("x");
       let pos_y = readlines("y");
       this.playerMove(pos_x, pos_y);
