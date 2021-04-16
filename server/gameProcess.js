@@ -15,10 +15,60 @@ function print(player) {
 }
 
 class gameProcess {
-  constructor() {
+  constructor(io, gameSocket) {
+    this.io = io;
+    this.gameSocket = gameSocket;
     this.player1 = new player("player1");
     this.player2 = new player("player2");
     this.curPlayer = 0;
+    this.gameSocket.emit("grid", (id) => {
+      if (id === this.player1.id) {
+        this.gameSocket.emit("your grid", this.player1.board);
+        this.gameSocket.emit("the other grid", this.player2.board);
+      } else {
+        this.gameSocket.emit("your grid", this.player2.board);
+        this.gameSocket.emit("the other grid", this.player1.board);
+      }
+    });
+
+    this.gameSocket.on("attack", (attackPos) => {
+      let pos_x;
+      let pos_y;
+      pos_x = attackPos.x;
+      pos_y = attackPos.y;
+
+      if (this.curPlayer == 0) {
+        // let pos_x = readlines("x");
+        // let pos_y = readlines("y");
+        this.playerMove(pos_x, pos_y);
+        console.log("play2 grid");
+        print(this.player2);
+        this.gameSocket.emit("attack", this.player2.id);
+      } else {
+        // let pos_x = readlines("x");
+        // let pos_y = readlines("y");
+        this.playerMove(pos_x, pos_y);
+        console.log("play1 grid");
+        print(this.player1);
+        this.gameSocket.emit("attack", this.player1.id);
+      }
+      if (this.isGameEnds() !== "no") {
+        this.gameSocket.emit("win", this.isGameEnds());
+      } else {
+      }
+    });
+
+    gameSocket.on("place ship", (ship) => {
+      let type = ship.type;
+      let pos_x = ship.x;
+      let pos_y = ship.y;
+      let rotation = ship.rotation;
+      if (ship.id === this.player1.id) {
+        this.player1.addShip(type, pos_x, pos_y, rotation);
+      } else {
+        this.player2.addShip(type, pos_x, pos_y, rotation);
+      }
+    });
   }
 
   assignPlayerId = (id) => {
@@ -44,65 +94,7 @@ class gameProcess {
     // this.player2.addShip(5, 5, 2, rotation);
     // let rotation = false;
 
-    while (this.player1.getshipNum() < 5) {
-      let type;
-      let pos_x;
-      let pos_y;
-      let rotation;
-      gameSocket.on("place ship", (ship) => {
-        type = ship.type;
-        pos_x = ship.x;
-        pos_y = ship.y;
-        rotation = ship.rotation;
-      });
-      this.player1.addShip(type, pos_x, pos_y, rotation);
-
-      console.log("play1 grid");
-      print(this.player1);
-    }
-
-    while (this.player2.getshipNum() < 5) {
-      let type;
-      let pos_x;
-      let pos_y;
-      let rotation;
-      gameSocket.on("place ship", (ship) => {
-        type = ship.type;
-        pos_x = ship.x;
-        pos_y = ship.y;
-        rotation = ship.rotation;
-      });
-      this.player2.addShip(type, pos_x, pos_y, rotation);
-
-      console.log("play2 grid");
-      print(this.player2);
-    }
-
     gameSocket.emit("start game", "start game");
-
-    while (this.isGameEnds() === "no") {
-      let pos_x;
-      let pos_y;
-      gameSocket.emit("attack", this.player.id);
-      gameSocket.on("attack", (attackPos) => {
-        pos_x = attackPos.x;
-        pos_y = attackPos.y;
-      });
-      if (this.curPlayer == 0) {
-        // let pos_x = readlines("x");
-        // let pos_y = readlines("y");
-        this.playerMove(pos_x, pos_y);
-        console.log("play2 grid");
-        print(this.player2);
-      } else {
-        // let pos_x = readlines("x");
-        // let pos_y = readlines("y");
-        this.playerMove(pos_x, pos_y);
-        console.log("play1 grid");
-        print(this.player1);
-      }
-    }
-    gameSocket.emit("win", this.isGameEnds());
   }
 
   isGameEnds() {
