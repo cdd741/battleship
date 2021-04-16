@@ -45,13 +45,10 @@ class App extends React.Component {
         this.setState({
             startGame: true,
         });
+        this.socket.on("game-start", data=> {
+          console.log(data)
+        } );
     };
-
-    componentDidMount = () => {
-      this.socket.on("connection", data=> {
-        console.log(data)
-      })
-    }
 
     render() {
         let game = <Start clickHandler={this.handleClickStart} />;
