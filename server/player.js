@@ -7,6 +7,7 @@ class player {
     this.board = new board();
     this.boatSettled = 0;
     this.shipList = [];
+    this.id = "";
   }
 
   getshipNum() {
