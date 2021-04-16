@@ -11,10 +11,8 @@ const initializeGame = (sio, socket) => {
   gameSocket = socket;
   gamesInSession.push(gameSocket);
   gameSocket.on("disconnect", onDisconnect);
-  gameSocket.on("place bomb", pos);
 
   // gameSocket.on('your turn', )
-  gameSocket.on("win", win);
   gameSocket.on("createNewGame", createNewGame);
   gameSocket.on("playerJoinGame", playerJoinsGame);
 };
