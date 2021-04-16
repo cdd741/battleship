@@ -1,0 +1,10 @@
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 8rem;
+    &__grid {
+        width:1rem;
+        height: 1rem;
+        border: 1px solid #333;
+    }
+}
