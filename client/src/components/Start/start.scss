@@ -1,3 +1,15 @@
 .start {
     text-align: center;
+
+    &__button {
+        text-align: center;
+        text-transform: uppercase;
+        transition: all ease 0.5s;
+        margin: 1rem 0;
+        background-size: 200% auto;
+        background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);;
+        &:hover {
+            background-position: right center;
+        }
+    }
 }
