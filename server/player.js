@@ -46,7 +46,6 @@ class player {
       }
     }
 
-    console.log(`hitcode: ${hitcode}`);
     if (hitcode === 4) {
       let sankShipPoslList = this.shipList[ship_index].getShip_pos();
 
