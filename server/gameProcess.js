@@ -1,4 +1,5 @@
 const player = require("./player");
+const { gameSocket } = require("./socket");
 // const readline = require("readline");
 const prompt = require("prompt-sync")();
 
@@ -18,6 +19,14 @@ class gameProcess {
     this.player2 = new player("player2");
     this.curPlayer = 0;
   }
+
+  assignPlayerId = (id) => {
+    if (this.player1.id === "") {
+      this.player1.id = id;
+    } else {
+      this.player2.id = id;
+    }
+  };
 
   gameStart() {
     // for developing purpose
@@ -60,35 +69,41 @@ class gameProcess {
 
     gameSocket.emit("start game", "start game");
 
-    while (this.isGameEnds() === false) {
-      gameSocket.emit("start game", "start game");
-      let pos_x = readlines("x");
-      let pos_y = readlines("y");
-      this.playerMove(pos_x, pos_y);
-
+    while (this.isGameEnds() === "no") {
+      let pos_x;
+      let pos_y;
+      gameSocket.emit("attack", this.player.id);
+      gameSocket.on("attack", (attackPos) => {
+        pos_x = attackPos.x;
+        pos_y = attackPos.y;
+      });
       if (this.curPlayer == 0) {
+        // let pos_x = readlines("x");
+        // let pos_y = readlines("y");
+        this.playerMove(pos_x, pos_y);
         console.log("play2 grid");
         print(this.player2);
       } else {
+        // let pos_x = readlines("x");
+        // let pos_y = readlines("y");
+        this.playerMove(pos_x, pos_y);
         console.log("play1 grid");
         print(this.player1);
       }
     }
+    gameSocket.emit("win", this.isGameEnds());
   }
 
   isGameEnds() {
     if (this.player1.isLose()) {
-      return true;
+      return "p1";
+    } else if (this.player2.isLose()) {
+      return "p2";
+    } else if (this.player1.isFull() && this.player2.isFull()) {
+      return "full";
+    } else {
+      return "no";
     }
-    if (this.player2.isLose()) {
-      return true;
-    }
-
-    if (this.player1.isFull() && this.player2.isFull()) {
-      return true;
-    }
-
-    return false;
   }
 
   playerMove(pos_x, pos_y) {
