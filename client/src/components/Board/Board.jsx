@@ -1,20 +1,20 @@
-import React from 'react';
-import './board.scss';
+import React from "react";
+import "./board.scss";
 
-function Board() {
-    let gridArray = [];
-    for (let i=0; i<64;i++) {
-        gridArray.push(i);
-    }
-
-    let grids = gridArray.map(grid => {
-        return <div key={grid} className="board__grid"></div>
+function Board(props) {
+    let grids = props.gridArray.map((grid, index) => {
+        return (
+            <div
+                key={index}
+                className="board__grid"
+                onClick={() => {
+                    props.handleClick(grid.lat, grid.lon);
+                }}
+            ></div>
+        );
     });
-    return (
-        <div className="board">
-            {grids}
-        </div>
-    )
+
+    return <div className="board">{grids}</div>;
 }
 
-export default Board
+export default Board;

@@ -23,6 +23,6 @@ io.on("connection", (client) => {
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`express listening on port ${port}`);
 });
