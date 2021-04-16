@@ -54,7 +54,6 @@ class gameProcess {
       }
       if (this.isGameEnds() !== "no") {
         this.gameSocket.emit("win", this.isGameEnds());
-      } else {
       }
     });
 
@@ -68,6 +67,13 @@ class gameProcess {
       } else {
         this.player2.addShip(type, pos_x, pos_y, rotation);
       }
+
+      if (
+        this.player1.shipList.length === 5 &&
+        this.player1.shipList.length === 5
+      ) {
+        gameSocket.emit("start", "game start");
+      }
     });
   }
 
@@ -78,24 +84,6 @@ class gameProcess {
       this.player2.id = id;
     }
   };
-
-  gameStart() {
-    // for developing purpose
-    // this.player1.addShip(1, 1, 2, rotation);
-    // this.player1.addShip(2, 2, 2, rotation);
-    // this.player1.addShip(3, 3, 2, rotation);
-    // this.player1.addShip(4, 4, 2, rotation);
-    // this.player1.addShip(5, 5, 2, rotation);
-
-    // this.player2.addShip(1, 1, 2, rotation);
-    // this.player2.addShip(2, 2, 2, rotation);
-    // this.player2.addShip(3, 3, 2, rotation);
-    // this.player2.addShip(4, 4, 2, rotation);
-    // this.player2.addShip(5, 5, 2, rotation);
-    // let rotation = false;
-
-    gameSocket.emit("start game", "start game");
-  }
 
   isGameEnds() {
     if (this.player1.isLose()) {
