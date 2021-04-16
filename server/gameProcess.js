@@ -1,5 +1,6 @@
 const player = require("./player");
-const { gameSocket } = require("./socket");
+const socket = require("./socket");
+const gameSocket = socket.gameSocket;
 // const readline = require("readline");
 const prompt = require("prompt-sync")();
 

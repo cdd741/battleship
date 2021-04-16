@@ -7,6 +7,7 @@ import Title from "./components/Title/Title";
 import { board } from "./util/board";
 // import subscribeToGame from "./util/subscribeToGame";
 import socketIOClient from "socket.io-client";
+import { v4 as uuidv4 } from 'uuid';
 const ENDPOINT = "http://localhost:8080";
 
 class App extends React.Component {
@@ -45,10 +46,12 @@ class App extends React.Component {
         this.setState({
             startGame: true,
         });
-        this.socket.on("game-start", data=> {
+      this.socket.emit("createNewGame", uuidv4());
+        this.socket.on("createNewGame", data=> {
           console.log(data)
         } );
     };
+
 
     render() {
         let game = <Start clickHandler={this.handleClickStart} />;
