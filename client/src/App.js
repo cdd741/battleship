@@ -10,27 +10,38 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-          startGame: false,
+            startGame: false,
         };
     }
 
     handleClickStart = (event) => {
-      event.preventDefault();
-      this.setState({
-        startGame:true
-      });
-    }
+        event.preventDefault();
+        this.setState({
+            startGame: true,
+        });
+    };
 
     render() {
-      let game = this.state.startGame ?  <><Board /><AvailableShips /></> : <Start clickHandler={this.handleClickStart}/>
+        let game = <Start clickHandler={this.handleClickStart} />;
+        if (this.state.startGame) {
+            game = (
+                <div className="canvas">
+                  <div className="canvas__boards">
+                    <Board />
+                    <Board />
+                  </div>
+                  <h2>Your available ships</h2>
+                    <AvailableShips />
+                </div>
+            );
+        }
+
         return (
             <div className="App">
                 <header>
                     <Title title="Battleships" />
                 </header>
-                <main>
-                    {game}
-                </main>
+                <main>{game}</main>
             </div>
         );
     }
