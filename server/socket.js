@@ -19,9 +19,9 @@ const initializeGame = (sio, socket) => {
 
 function createNewGame(gameId) {
   game = new gameProcess();
-  game.gameStart();
   this.emit("createNewGame", { gameId: gameId, mySocketId: this.id });
   this.join(gameId);
+  game.gameStart();
 }
 
 function playerJoinsGame(idData) {
