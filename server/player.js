@@ -33,7 +33,7 @@ class player {
     return true;
   }
 
-  HitbyAnother(pos_x, pos_y) {
+  hitbyAnother(pos_x, pos_y) {
     let hitcode = 0;
     let ship_index = -1;
 
@@ -46,7 +46,6 @@ class player {
       }
     }
 
-    console.log(`hitcode: ${hitcode}`);
     if (hitcode === 4) {
       let sankShipPoslList = this.shipList[ship_index].getShip_pos();
 
