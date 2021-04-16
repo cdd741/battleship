@@ -14,8 +14,8 @@ class ship {
       }
     }
 
-    console.log(`ship pos: ${this.ship_pos}`);
-    console.log(`bomb pos: ${pos_x} ${pos_y}`);
+    // console.log(`ship pos: ${this.ship_pos}`);
+    // console.log(`bomb pos: ${pos_x} ${pos_y}`);
     let boom = false;
     for (let i = 0; i < this.ship_pos.length; i++) {
       if (this.ship_pos[i][0] === pos_x && this.ship_pos[i][1] === pos_y) {

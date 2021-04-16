@@ -33,7 +33,7 @@ class player {
     return true;
   }
 
-  HitbyAnother(pos_x, pos_y) {
+  hitbyAnother(pos_x, pos_y) {
     let hitcode = 0;
     let ship_index = -1;
 

@@ -28,7 +28,7 @@ class board {
 
     for (i = 0; i < 10; i++) {
       for (j = 0; j < 10; j++) {
-        if (this.grid[i][j] == 0 || this.grid[i][j] == 1) {
+        if (this.grid[i][j] === 0 || this.grid[i][j] === 1) {
           return false;
         }
       }

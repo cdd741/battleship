@@ -20,8 +20,8 @@ class gameProcess {
   }
 
   gameStart() {
+    // for developing purpose
     let rotation = false;
-
     this.player1.addShip(1, 1, 2, rotation);
     this.player1.addShip(2, 2, 2, rotation);
     this.player1.addShip(3, 3, 2, rotation);
@@ -85,9 +85,9 @@ class gameProcess {
 
   playerMove(pos_x, pos_y) {
     if (this.curPlayer === 1) {
-      this.player2.HitbyAnother(pos_x, pos_y);
+      this.player2.hitbyAnother(pos_x, pos_y);
     } else {
-      this.player1.HitbyAnother(pos_x, pos_y);
+      this.player1.hitbyAnother(pos_x, pos_y);
     }
 
     this.curPlayer = (this.curPlayer + 1) % 2;
