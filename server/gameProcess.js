@@ -44,11 +44,16 @@ class gameProcess {
     // let rotation = false;
 
     while (this.player1.getshipNum() < 5) {
-      gameSocket.on("place ship", ship);
-      let type = ship.type;
-      let pos_x = ship.x;
-      let pos_y = ship.y;
-      let rotation = ship.rotation;
+      let type;
+      let pos_x;
+      let pos_y;
+      let rotation;
+      gameSocket.on("place ship", (ship) => {
+        type = ship.type;
+        pos_x = ship.x;
+        pos_y = ship.y;
+        rotation = ship.rotation;
+      });
       this.player1.addShip(type, pos_x, pos_y, rotation);
 
       console.log("play1 grid");
@@ -56,11 +61,16 @@ class gameProcess {
     }
 
     while (this.player2.getshipNum() < 5) {
-      gameSocket.on("place ship", ship);
-      let type = ship.type;
-      let pos_x = ship.x;
-      let pos_y = ship.y;
-      let rotation = ship.rotation;
+      let type;
+      let pos_x;
+      let pos_y;
+      let rotation;
+      gameSocket.on("place ship", (ship) => {
+        type = ship.type;
+        pos_x = ship.x;
+        pos_y = ship.y;
+        rotation = ship.rotation;
+      });
       this.player2.addShip(type, pos_x, pos_y, rotation);
 
       console.log("play2 grid");
